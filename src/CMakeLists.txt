@@ -1,10 +1,46 @@
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Multimedia Concurrent)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Multimedia Concurrent)
+
 
 set(PROJECT_SOURCES
+        res.qrc
         main.cpp
         gamewidget.cpp
         gamewidget.h
+        startmenu.h
+        startmenu.cpp
+        qgraphicsbutton.h
+        qgraphicsbutton.cpp
+        weaponmod.h
+        weaponmod.cpp
+        shopitem.h
+        shopitem.cpp
+        archivemod.h
+        archivemod.cpp
+        gameengine.h
+        gameengine.cpp
+        map.h
+        soundplayer.h
+        globaltimer.h
+        log.h
+        player.h
+        player.cpp
+        weapon.h
+        weapon.cpp
+        bullet.h
+        bullet.cpp
+        enemy.h
+        enemy.cpp
+        exp.h
+        exp.cpp
+        heartlabel.h
+        heartlabel.cpp
+        upgrademod.h
+        upgrademod.cpp
+        gamemenu.h
+        gamemenu.cpp
+        gameend.h
+        gameend.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -30,7 +66,9 @@ else()
     endif()
 endif()
 
-target_link_libraries(ProjectVoid PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(ProjectVoid PRIVATE Qt${QT_VERSION_MAJOR}::Widgets 
+                                       Qt${QT_VERSION_MAJOR}::Multimedia 
+                                       Qt${QT_VERSION_MAJOR}::Concurrent)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

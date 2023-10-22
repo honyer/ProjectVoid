@@ -11,7 +11,6 @@
 #include "gameend.h"
 #include "archivemod.h"
 #include "log.h"
-#include "collisiondetector.h"
 
 #include <QSettings>
 #include <QPushButton>
@@ -43,14 +42,6 @@ GameEngine::GameEngine(int weapon, int archive, int width, int height, QWidget *
 
     InitMainScene();
     connect(main_timer_, &QTimer::timeout, this, &GameEngine::MainHandle);
-
-    // 初始化之后再启动子线程
-    // collision_thread_ = new QThread();
-    // detector_ = new CollisionDetector(player_, main_scene_);
-    // detector_->moveToThread(collision_thread_);
-    // connect(collision_thread_, &QThread::started, detector_, &CollisionDetector::StartRun);
-    // collision_thread_->start();
-    // CheckCollision();
 }
 
 void GameEngine::CloseAll()
