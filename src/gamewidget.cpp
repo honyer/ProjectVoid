@@ -17,10 +17,10 @@ GameWidget::GameWidget(QWidget* parent)
     QCursor cursor(cursor_img, -cursor_img.width() / 4, cursor_img.height() / 4);
     setCursor(cursor);
 
-    // ¼ÓÔØÈ«¾Ö×ÖÌå£¬Ö»Ðè¼ÓÔØÒ»´Î£¬ÆäËûµØ·½¾ù¿ÉÊ¹ÓÃ
+    // åŠ è½½å…¨å±€å­—ä½“ï¼Œåªéœ€åŠ è½½ä¸€æ¬¡ï¼Œå…¶ä»–åœ°æ–¹å‡å¯ä½¿ç”¨
     QFontDatabase::addApplicationFont(":/assets/fonts/fusion-pixel-proportional.ttf");
 
-    // ²¼¾Ö±ßÔµÎª0,Ê¹ÓÃ²¼¾ÖµÄ·½Ê½½«StatMenuºÍGamenEngineÇ¶Èëµ½GameWidgetÖÐ
+    // å¸ƒå±€è¾¹ç¼˜ä¸º0,ä½¿ç”¨å¸ƒå±€çš„æ–¹å¼å°†StatMenuå’ŒGamenEngineåµŒå…¥åˆ°GameWidgetä¸­
     layout_ = new QVBoxLayout(this);
     layout_->setContentsMargins(0, 0, 0, 0);
     setLayout(layout_);
@@ -44,8 +44,8 @@ void GameWidget::LaunchGame(int weapon, int archive)
     QTimer::singleShot(0, startmenu_, [=]()
         { startmenu_->CloseAll(); });
 
-    gameengine_ = new GameEngine(weapon_, archive_, kWidth, kHeight, this);
-    gameengine_->show();
+    gameengine_ = new GameEngine(weapon, archive, kWidth, kHeight, this);
+    layout_->addWidget(gameengine_);
     connect(gameengine_, &GameEngine::RestartGame, this, &GameWidget::RestartGame);
     connect(gameengine_, &GameEngine::ExitGame, this, &GameWidget::ExitGame);
 }
@@ -55,7 +55,7 @@ void GameWidget::RestartGame()
      layout_->removeWidget(gameengine_);
      gameengine_->close();
      QTimer::singleShot(0, gameengine_, [=]()
-                        { delete gameengine_; });
+                        {  gameengine_->CloseAll(); });
 
     InitStartMenu();
 }

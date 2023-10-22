@@ -253,7 +253,8 @@ void GameEngine::InitPlayer()
             { SetExpBar(ratio);
             data_amount_++; });
     connect(player_, &Player::PlayerLevelup, this, &GameEngine::LevelUp);
-    connect(player_, &Player::PlayerDeadth, this, &GameEngine::ShowGameEnd);
+    connect(player_, &Player::PlayerDeadth, this, [=]()
+            { ShowGameEnd(0); });
 }
 
 void GameEngine::UpdateBackground()
@@ -272,12 +273,15 @@ void GameEngine::UpdateCountDown()
     QString time = QTime(0, 0).addSecs(countdown_seconds_).toString("mm:ss");
     countdown_text_->setPlainText(time);
 
+    // timeout,游戏胜利
+    if (countdown_seconds_ <= 0)
+    {
+        ShowGameEnd(1);
+    }
+
     // 获取当前时间
-    QTime currentTime = QTime::currentTime();
-    // 将时间转换为字符串
-    QString currentTimeString = currentTime.toString("hh:mm:ss.zzz");
-    // 打印当前时间
-    qDebug() << "Current Time: " << currentTimeString;
+    QString currentTimeString = QTime::currentTime().toString("hh:mm:ss.zzz");
+    qDebug() << currentTimeString << __FILE__ << __LINE__;
 }
 
 void GameEngine::InitWeapon()
@@ -596,13 +600,14 @@ void GameEngine::ShowGameMenu()
     connect(menu_, &GameMenu::ClickedMenuButton, this, &GameEngine::ChooseGameMenu);
 }
 
-void GameEngine::ShowGameEnd()
+void GameEngine::ShowGameEnd(int gameover)
 {
+    // 游戏结束 0:失败 1:胜利
     escape_switch_ = false;
     GamePause();
 
     QRectF rect(kWidth / 2 - 250, 150, 560, 500);
-    end_ = new GameEnd(0, rect, main_scene_, this);
+    end_ = new GameEnd(gameover, rect, main_scene_, this);
 
     connect(end_, &GameEnd::ClickedMenuButton, this, &GameEngine::ChooseGameEnd);
 }
@@ -671,8 +676,9 @@ void GameEngine::ChooseGameEnd(int index)
     bgm_->stop();
     if (index)
     {
+        Log::GetInstance().Clear();
+        end_->Close();
         emit RestartGame();
-        CloseAll();
     }
     else
     {
@@ -694,7 +700,7 @@ void GameEngine::InitDataText()
 void GameEngine::InitCountDown()
 {
     // 10分钟
-    countdown_seconds_ = 10 * 60;
+    countdown_seconds_ = 1 * 60;
     countdown_count_ = 0;
 
     countdown_text_ = new QGraphicsTextItem();
@@ -761,7 +767,7 @@ void GameEngine::MainHandle()
     UpdateBackground();
     DataIncrement();
     UpdateCountDown();
-    GenerateEnemies(); // 耗时操作，影响主计时器
+    GenerateEnemies();
     player_->UpdatePosition();
     player_->LoadPlayer();
     player_->OnWindyState();

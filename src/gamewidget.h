@@ -15,19 +15,19 @@ public:
     GameWidget(QWidget* parent = nullptr);
 
 private:
-    const int kWidth;  // ´°¿Ú¿í
-    const int kHeight; // ´°¿Ú¸ß
+    const int kWidth;  // çª—å£å®½
+    const int kHeight; // çª—å£é«˜
 
-    QVBoxLayout* layout_;    // ²¼¾Ö
-    StartMenu* startmenu_;   // ¿ªÊ¼²Ëµ¥
-    GameEngine* gameengine_; // ÓÎÏ·ÒıÇæ
+    QVBoxLayout* layout_;    // å¸ƒå±€
+    StartMenu* startmenu_;   // å¼€å§‹èœå•
+    GameEngine* gameengine_; // æ¸¸æˆå¼•æ“
 
-    int weapon_;  // ÎäÆ÷ÀàĞÍ£ºÄ¬ÈÏ0
-    int archive_; // ´æµµ±àºÅ£ºÄ¬ÈÏ-1±íÊ¾Ã»ÓĞ´æµµ
+    int weapon_;  // æ­¦å™¨ç±»å‹ï¼šé»˜è®¤0
+    int archive_; // å­˜æ¡£ç¼–å·ï¼šé»˜è®¤-1è¡¨ç¤ºæ²¡æœ‰å­˜æ¡£
 
-    void InitStartMenu();                     // ³õÊ¼»¯¿ªÊ¼²Ëµ¥
-    void LaunchGame(int weapon, int archive); // ¿ªÊ¼ÓÎÏ·
-    void RestartGame();                       // ÖØÆôÓÎÏ·
-    void ExitGame();                          // ÍË³öÓÎÏ·
+    void InitStartMenu();                     // åˆå§‹åŒ–å¼€å§‹èœå•
+    void LaunchGame(int weapon, int archive); // å¼€å§‹æ¸¸æˆ
+    void RestartGame();                       // é‡å¯æ¸¸æˆ
+    void ExitGame();                          // é€€å‡ºæ¸¸æˆ
 };
 #endif // GAMEWIDGET_H

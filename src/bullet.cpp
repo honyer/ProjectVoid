@@ -33,8 +33,6 @@ void Bullet::MainHandler()
 {
     Move();
     TrackEnemy();
-    CollideWithEnemy();
-    CollideWithPlayer();
 }
 void Bullet::InitBullet()
 {
@@ -103,6 +101,13 @@ void Bullet::Move()
         this->deleteLater();
         return;
     }
+    if (kIndex == EnemyBullet)
+    {
+        CollideWithPlayer();
+        return;
+    }
+
+    CollideWithEnemy();
 }
 
 void Bullet::CollideWithEnemy()

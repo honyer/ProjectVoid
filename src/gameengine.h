@@ -122,7 +122,7 @@ private:
     void UpdateLog(QString str); // 更新日志
 
     void ShowGameMenu();            // 游戏菜单
-    void ShowGameEnd();             // 游戏结束
+    void ShowGameEnd(int index);    // 游戏结束 0:失败 1:胜利
     void ShowArchive();             // 显示存档菜单
     void ChooseGameMenu(int index); // 选择游戏菜单
     void ChooseGameEnd(int index);  // 选择游戏结束
